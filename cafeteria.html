@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Gourmet | Catering Corporativo Premium</title>
+    
+    <!-- Fuentes Premium -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* =========================================
+           1. VARIABLES Y CONFIGURACIÓN GENERAL
+           ========================================= */
+        :root {
+            --primary-dark: #3E2723;   /* Café oscuro */
+            --primary-light: #5D4037;  /* Café medio */
+            --gold: #D4AF37;           /* Dorado elegante */
+            --gold-light: #F4E5BC;     /* Dorado suave */
+            --cream: #FAF9F6;          /* Blanco roto / Crema */
+            --text-main: #333333;
+            --text-light: #777777;
+            --white: #FFFFFF;
+            --shadow: 0 10px 30px rgba(62, 39, 35, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--cream);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; color: var(--primary-dark); }
+        a { text-decoration: none; transition: all 0.3s ease; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* =========================================
+           2. PRELOADER
+           ========================================= */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--primary-dark); z-index: 9999;
+            display: flex; justify-content: center; align-items: center; flex-direction: column;
+            transition: opacity 0.5s ease;
+        }
+        .loader-icon { font-size: 3rem; color: var(--gold); animation: pulse 1.5s infinite; }
+        .loader-text { color: var(--white); font-family: 'Playfair Display', serif; margin-top: 15px; letter-spacing: 2px; font-size: 1.2rem; }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* =========================================
+           3. NAV / ENCABEZADO
+           ========================================= */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 1000; padding: 1rem 5%;
+            transition: all 0.4s ease;
+        }
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); padding: 0.8rem 5%;
+        }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary-dark); letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
+        .logo i { color: var(--gold); }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: var(--primary-dark); font-weight: 500; font-size: 0.9rem; text-transform: uppercase; position: relative; }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
+            background-color: var(--gold); transition: width 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .btn-cta {
+            padding: 10px 25px; background: var(--primary-dark); color: var(--white);
+            border-radius: 50px; font-weight: 600; border: 2px solid var(--primary-dark);
+        }
+        .btn-cta:hover { background: transparent; color: var(--primary-dark); }
+
+        /* =========================================
+           4. HERO SECTION
+           ========================================= */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            color: var(--white); padding-top: 60px;
+        }
+        .hero-content { max-width: 800px; padding: 20px; }
+        .hero-subtitle { font-size: 1.2rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+        .hero-title { font-size: 4.5rem; line-height: 1.1; margin-bottom: 1.5rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); }
+        .hero p { font-size: 1.2rem; margin-bottom: 2.5rem; font-weight: 300; }
+
+        /* =========================================
+           5. SECCIONES GENERALES
+           ========================================= */
+        .about-section { padding: 6rem 10%; background: var(--white); text-align: center; }
+        .section-header { margin-bottom: 4rem; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .separator { width: 80px; height: 3px; background: var(--gold); margin: 0 auto; }
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; }
+        .about-card {
+            padding: 2rem; border: 1px solid #eee; border-radius: 10px;
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+        .about-card:hover { transform: translateY(-10px); box-shadow: var(--shadow); border-color: var(--gold); }
+        .about-card h3 { margin: 1rem 0; font-size: 1.8rem; }
+        .about-card p { font-size: 0.95rem; color: var(--text-light); }
+
+        /* =========================================
+           6. SERVICIOS
+           ========================================= */
+        .services-section { padding: 6rem 10%; background-color: var(--cream); }
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        .service-box {
+            background: var(--white); border-radius: 15px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.4s ease;
+        }
+        .service-box:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .service-img-holder { height: 200px; overflow: hidden; }
+        .service-img-holder img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .service-box:hover .service-img-holder img { transform: scale(1.1); }
+        .service-details { padding: 2rem; }
+        .service-details h3 { font-size: 1.4rem; margin-bottom: 1rem; }
+        .service-details p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 1.5rem; }
+        .service-link { color: var(--gold); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* =========================================
+           7. AURA DELUXE
+           ========================================= */
+        .deluxe-section { background-color: var(--primary-dark); color: var(--white); display: flex; flex-wrap: wrap; }
+        .deluxe-content { flex: 1; padding: 6rem 5%; min-width: 350px; display: flex; flex-direction: column; justify-content: center; }
+        .deluxe-image {
+            flex: 1; min-width: 350px;
+            background: url('https://images.unsplash.com/photo-1601315379734-425a469078b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+            min-height: 400px;
+        }
+        .deluxe-content h2 { color: var(--gold); font-size: 3rem; margin-bottom: 1rem; }
+        .deluxe-content h4 { color: #ccc; font-style: italic; margin-bottom: 2rem; font-weight: 300; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .menu-item { display: flex; align-items: center; gap: 15px; }
+        .menu-item i { color: var(--gold); background: rgba(255,255,255,0.1); padding: 10px; border-radius: 50%; }
+
+        /* =========================================
+           8. TARGET & FOOTER
+           ========================================= */
+        .target-section { padding: 5rem 10%; text-align: center; background: url('https://www.transparenttextures.com/patterns/cubes.png'); }
+        .tags-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-top: 3rem; }
+        .tag {
+            background: var(--white); padding: 12px 25px; border-radius: 50px; font-size: 0.9rem;
+            font-weight: 600; color: var(--primary-dark); box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid transparent; transition: all 0.3s;
+        }
+        .tag:hover { border-color: var(--gold); transform: translateY(-3px); }
+
+        footer { background-color: #1a1a1a; color: #ccc; padding: 4rem 5% 2rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
+        .footer-col h4 { color: var(--white); margin-bottom: 1.5rem; font-size: 1.2rem; }
+        .footer-col p { margin-bottom: 1rem; font-size: 0.9rem; }
+        .footer-col i { color: var(--gold); margin-right: 10px; }
+        
+        /* ESTILO BOTONES SOCIALES */
+        .socials a {
+            display: inline-flex; justify-content: center; align-items: center;
+            width: 40px; height: 40px; background: rgba(255,255,255,0.1);
+            color: var(--white); border-radius: 50%; margin-right: 10px; transition: 0.3s;
+        }
+        .socials a:hover { background: var(--gold); color: var(--primary-dark); transform: scale(1.1); }
+
+        .footer-bottom { text-align: center; border-top: 1px solid #333; padding-top: 2rem; font-size: 0.8rem; }
+
+        /* ANIMACIONES */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .deluxe-section { flex-direction: column-reverse; }
+            .deluxe-image { min-height: 250px; }
+            .menu-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <i class="fas fa-utensils loader-icon"></i>
+        <div class="loader-text">AURA GOURMET</div>
+    </div>
+
+    <!-- HEADER -->
+    <header id="header">
+        <nav>
+            <div class="logo">
+                <!-- MODIFICACIÓN: Se eliminaron la hoja y la cuchara, solo queda el ícono de utensilios -->
+                <i class="fas fa-utensils"></i> AURA GOURMET
+            </div>
+            <div class="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#mision">Nosotros</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <a href="#contacto" class="btn-cta">Cotizar</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <span class="hero-subtitle reveal">Catering Corporativo</span>
+            <h1 class="hero-title reveal">El Sabor Perfecto <br>Para Cada Reunión</h1>
+            <p class="reveal">Elevamos la imagen de tu empresa con experiencias gastronómicas inolvidables.</p>
+            <a href="#servicios" class="btn-cta reveal" style="background-color: var(--gold); border-color: var(--gold); color: var(--primary-dark);">Ver Menú</a>
+        </div>
+    </section>
+
+    <!-- NOSOTROS -->
+    <section id="mision" class="about-section">
+        <div class="section-header reveal">
+            <h2>Nuestra Esencia</h2>
+            <div class="separator"></div>
+        </div>
+        <div class="about-grid reveal">
+            <div class="about-card">
+                <i class="fas fa-bullseye fa-3x" style="color: var(--gold); margin-bottom: 1rem;"></i>
+                <h3>Misión</h3>
+                <p>Aura Gourmet ofrece catering corporativo de alta calidad, 
+                    con excelente gastronomía, presentación impecable y servicio puntual y profesional, 
+                    creando experiencias culinarias adaptadas que fortalecen la imagen y el éxito de sus clientes.
+</p>
+            </div>
+            <div class="about-card">
+                <i class="fas fa-eye fa-3x" style="color: var(--gold); margin-bottom: 1rem;"></i>
+                <h3>Visión</h3>
+                <p>Buscamos ser la empresa de catering corporativo más reconocida y confiable del país, 
+                    destacando por innovación, atención personalizada y experiencias de alto nivel,
+                     expandiendo nuestros servicios y posicionándonos como el aliado estratégico preferido por las empresas.</p>
+            </div>
+            <div class="about-card">
+                <i class="fas fa-heart fa-3x" style="color: var(--gold); margin-bottom: 1rem;"></i>
+                <h3>Valores</h3>
+                <p>Excelencia, Profesionalidad, Innovación gastronómica, Compromiso con el cliente, calidad</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="servicios" class="services-section">
+        <div class="section-header reveal">
+            <h2>Nuestros Servicios</h2>
+            <div class="separator"></div>
+            <p style="margin-top: 15px; color: #666;">Soluciones culinarias para cada tipo de evento empresarial.</p>
+        </div>
+        <div class="service-grid">
+            <div class="service-box reveal">
+                <div class="service-img-holder">
+                    <img src="coffe.jpg" alt="Coffee Break">
+                </div>
+                <div class="service-details">
+                    <h3>Coffee Break</h3>
+                    <p>Café, té, bocadillos, dulces y salados ideales para pausas productivas.</p>
+                    <a href="#contacto" class="service-link">Solicitar <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="service-box reveal">
+                <div class="service-img-holder">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60" alt="Almuerzos">
+                </div>
+                <div class="service-details">
+                    <h3>Almuerzos Ejecutivos</h3>
+                    <p>Buffet o platos gourmet individuales para deleitar a tus colaboradores.</p>
+                    <a href="#contacto" class="service-link">Solicitar <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="service-box reveal">
+                <div class="service-img-holder">
+                    <img src="celebration.jpg" alt="Eventos">
+                </div>
+                <div class="service-details">
+                    <h3>Catering Eventos</h3>
+                    <p>Lanzamientos, aniversarios y celebraciones con montaje de lujo.</p>
+                    <a href="#contacto" class="service-link">Solicitar <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DELUXE BITES -->
+    <section class="deluxe-section reveal">
+        <div class="deluxe-content">
+            <h4>Presentamos nuestro servicio estrella</h4>
+            <h2>Aura Deluxe Bites</h2>
+            <p style="margin-bottom: 2rem; color: #ddd;">Diseñado para ofrecer variedad, sabor y comodidad en un formato práctico y elegante.</p>
+            <div class="menu-grid">
+                <div class="menu-item"><i class="fas fa-check"></i> <span>Mini Sandwiches Artesanales</span></div>
+                <div class="menu-item"><i class="fas fa-check"></i> <span>Empanaditas Gourmet</span></div>
+                <div class="menu-item"><i class="fas fa-check"></i> <span>Mini Wraps de Pollo</span></div>
+                <div class="menu-item"><i class="fas fa-check"></i> <span>Bolitas de Queso</span></div>
+                <div class="menu-item"><i class="fas fa-check"></i> <span>Croquetas de la Casa</span></div>
+                <div class="menu-item"><i class="fas fa-check"></i> <span>Mini Pizzas</span></div>
+            </div>
+            <a href="#contacto" class="btn-cta" style="margin-top: 3rem; align-self: flex-start; background: var(--gold); border: none; color: var(--primary-dark);">Pedir Deluxe Bites</a>
+        </div>
+        <div class="deluxe-image"></div>
+    </section>
+
+    <!-- TARGET -->
+    <section class="target-section reveal">
+        <h2>Nuestro Enfoque</h2>
+        <p style="max-width: 600px; margin: 15px auto; color: #666;">Brindar servicios de catering corporativo con calidad gourmet, presentación impecable y soluciones prácticas para reuniones y eventos empresariales.</p>
+        <div class="tags-container">
+            <span class="tag">Corporaciones Multinacionales</span>
+            <span class="tag">Instituciones Públicas</span>
+            <span class="tag">Universidades</span>
+            <span class="tag">Reuniones Ejecutivas</span>
+        </div>
+    </section>
+
+    <!-- FOOTER CON REDES SOCIALES ACTIVAS -->
+    <footer id="contacto">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Aura Gourmet</h4>
+                <p>Somos tu aliado estratégico en eventos corporativos. Calidad y distinción en cada bocado.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto Directo</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Av. Wiston Churchill 95, piantini, Santo Domingo norte</p>
+                <p><i class="fas fa-phone-alt"></i> 809-713-0104</p>
+                <p><i class="fas fa-envelope"></i> </p>
+            </div>
+            <div class="footer-col">
+                <h4>Síguenos en:</h4>
+                <p></p>
+                
+                <!-- AQUÍ ESTÁN LOS BOTONES CON LINKS -->
+                <div class="socials">
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/aura_gourmet_catering?igsh=MWFtd2VlZ3o2NXl5Zw==" target="_blank" rel="noopener noreferrer" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    
+                    <!-- Facebook (Enlace de búsqueda, cambiar por URL de la Fanpage si la tienes) -->
+                    <a href="https://www.facebook.com/share/16NdAZDecy/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    
+                    <!-- TikTok -->
+                    <a href="https://www.tiktok.com/@aura_gourmet_catering" target="_blank" rel="noopener noreferrer" title="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+                
+                <p style="margin-top: 15px; font-size: 0.8rem; color: var(--gold);"></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        window.addEventListener("load", function() {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            setTimeout(() => { preloader.style.display = 'none'; }, 500);
+        });
+
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) { header.classList.add('scrolled'); } 
+            else { header.classList.remove('scrolled'); }
+        });
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => { observer.observe(el); });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
